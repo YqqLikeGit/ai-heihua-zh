@@ -3,54 +3,235 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 export HEIHUA_ROOT="$ROOT"
 exec python3 - "$@" <<'PY'
-import json, os, sys
+import json, os, sys, random, textwrap
 from pathlib import Path
 
 root = Path(os.environ["HEIHUA_ROOT"])
 index = json.loads((root / "glossary/index.json").read_text("utf-8"))
 terms_list = index["terms"]
+categories = index["categories"]
+
+# ── ANSI colors ──────────────────────────────────────────────────
+C = {
+    "reset": "\033[0m",
+    "bold": "\033[1m",
+    "dim": "\033[2m",
+    "cyan": "\033[36m",
+    "green": "\033[32m",
+    "yellow": "\033[33m",
+    "blue": "\033[34m",
+    "magenta": "\033[35m",
+    "red": "\033[31m",
+    "white": "\033[37m",
+}
+NO_COLOR = os.environ.get("NO_COLOR") or not sys.stdout.isatty()
+def color(code, text):
+    if NO_COLOR:
+        return text
+    return C.get(code, "") + text + C["reset"]
+
+# ── Build alias map ───────────────────────────────────────────────
 by_id = {t["id"]: t for t in terms_list}
 aliases = {}
 for t in terms_list:
-    aliases[t["id"]] = t
-    aliases[t["id"].replace("-", "")] = t
-    aliases[t["zh"]] = t
+    for key in [t["id"], t["id"].replace("-", ""), t["zh"], t["en"].lower()]:
+        aliases[key] = t
     for part in t["en"].lower().replace("/", " ").split():
         if len(part) > 2:
             aliases[part] = t
+    zh_parts = t["zh"].split(" / ")
+    for zp in zh_parts:
+        aliases[zp.strip()] = t
 
-args = sys.argv[1:]
-if not args or args[0] in ("-h", "--help"):
-    print("用法: heihua <词条>     例: heihua star | heihua mcp")
-    print("      heihua --list [github|ai|cursor|cs|web]")
-    raise SystemExit(0)
+# ── Fuzzy search ──────────────────────────────────────────────────
+def fuzzy_match(query, text):
+    q = query.lower()
+    t = text.lower()
+    if q in t:
+        return 0
+    qi = 0
+    for ti in t:
+        if qi < len(q) and q[qi] == ti:
+            qi += 1
+    return len(q) - qi
 
-if args[0] == "--list":
-    cat = args[1] if len(args) > 1 else None
+def search(query):
+    q = query.lower().strip()
+    if q in aliases:
+        return aliases[q], "exact"
+    scored = []
     for t in terms_list:
-        if cat and t["cat"] != cat:
-            continue
-        print(f"{t['id']:<22} {t['zh']:<14} {t['one'][:36]}")
-    raise SystemExit(0)
+        scores = [
+            fuzzy_match(q, t["id"]),
+            fuzzy_match(q, t["zh"]),
+            fuzzy_match(q, t["en"].lower()),
+            fuzzy_match(q, t["one"]),
+        ]
+        best = min(scores)
+        if best <= 3:
+            scored.append((best, t))
+    scored.sort(key=lambda x: x[0])
+    if scored:
+        return scored[0][1], "fuzzy"
+    return None, "none"
 
-key = args[0].lower().replace("_", "-")
-t = aliases.get(key) or aliases.get(key.replace("-", ""))
-if not t:
-    hits = [x for x in terms_list if key in x["id"] or key in x["zh"] or key in x["en"].lower()]
-    if len(hits) == 1:
-        t = hits[0]
-    elif hits:
-        print("多个匹配，请指定 id:")
-        for h in hits[:12]:
-            print(f"  heihua {h['id']}")
-        raise SystemExit(0)
+# ── Display ───────────────────────────────────────────────────────
+def show_term(t):
+    cat_name = categories.get(t["cat"], t["cat"])
+    print()
+    print("  " + color("bold", color("cyan", t["zh"])) + "    " + color("dim", t["en"]))
+    print("  " + color("dim", "─" * 50))
+    print("  " + color("yellow", "一句话") + "  " + t["one"])
+    print("  " + color("green", "比喻") + "    " + t["analogy"])
+    print("  " + color("magenta", "分类") + "    " + cat_name + " (" + t["cat"] + ")")
+    print("  " + color("dim", "详解") + "    glossary/" + t["cat"] + "/" + t["id"] + ".md")
+    print()
+
+def show_compact(t):
+    cat_icon = {"github": "🐙", "ai": "🤖", "cursor": "⚡", "cs": "💻", "web": "🌐"}
+    icon = cat_icon.get(t["cat"], "📌")
+    line = icon + " " + color("bold", t["id"]).ljust(24 + len(color("bold", "")))
+    line += " " + color("cyan", t["zh"]).ljust(20 + len(color("cyan", "")))
+    line += " " + color("dim", t["one"][:48])
+    print("  " + line)
+
+def show_list(cat=None):
+    terms = terms_list if not cat else [t for t in terms_list if t["cat"] == cat]
+    if cat:
+        cat_name = categories.get(cat, cat)
+        print("\n  " + color("bold", cat_name) + " (" + str(len(terms)) + " 条)\n")
     else:
-        print(f"未找到「{args[0]}」→ 运行 heihua --list")
-        raise SystemExit(1)
+        print("\n  " + color("bold", "全部词条") + " (" + str(len(terms)) + " 条)\n")
+    for t in terms:
+        show_compact(t)
 
-print(f"\n【{t['zh']}】  {t['en']}\n")
-print(f"一句话  {t['one']}\n")
-print(f"比喻    {t['analogy']}\n")
-print(f"分类    {t['cat']}")
-print(f"详解    glossary/{t['cat']}/{t['id']}.md\n")
+# ── Help ──────────────────────────────────────────────────────────
+def show_help():
+    gh_count = len([t for t in terms_list if t["cat"] == "github"])
+    ai_count = len([t for t in terms_list if t["cat"] == "ai"])
+    cu_count = len([t for t in terms_list if t["cat"] == "cursor"])
+    cs_count = len([t for t in terms_list if t["cat"] == "cs"])
+    wb_count = len([t for t in terms_list if t["cat"] == "web"])
+    print()
+    print("  " + color("bold", "AI 黑话词典 · CLI 查词工具"))
+    print()
+    print("  " + color("cyan", "用法"))
+    print("    heihua <词条>           查一个词条    " + color("dim", "例: heihua mcp"))
+    print("    heihua <词条1> <词条2>   查多个词条    " + color("dim", "例: heihua star agent rag"))
+    print("    heihua --list [分类]     列出词条      " + color("dim", "例: heihua --list ai"))
+    print("    heihua --random          随机一条      " + color("dim", "每天学一个"))
+    print("    heihua --categories      列出分类")
+    print("    heihua --search <关键词>  模糊搜索     " + color("dim", '例: heihua --search protocol'))
+    print("    heihua --stats            统计信息")
+    print()
+    print("  " + color("cyan", "分类"))
+    print("    github   GitHub & 开源 (" + str(gh_count) + " 条)")
+    print("    ai       AI & 大模型 (" + str(ai_count) + " 条)")
+    print("    cursor   Cursor & Claude Code (" + str(cu_count) + " 条)")
+    print("    cs       计算机基础 (" + str(cs_count) + " 条)")
+    print("    web      Web & 网络 (" + str(wb_count) + " 条)")
+    print()
+    print("  " + color("dim", "共 " + str(len(terms_list)) + " 条 · 开源 MIT · github.com/YqqLikeGit/ai-heihua-zh"))
+    print()
+
+# ── Main ──────────────────────────────────────────────────────────
+def main():
+    args = sys.argv[1:]
+
+    if not args or args[0] in ("-h", "--help"):
+        show_help()
+        return
+
+    cmd = args[0]
+
+    if cmd == "--list":
+        cat = args[1] if len(args) > 1 else None
+        if cat and cat not in categories:
+            print(color("red", "未知分类") + ": " + cat)
+            print("可用: " + ", ".join(categories.keys()))
+            sys.exit(1)
+        show_list(cat)
+        return
+
+    if cmd == "--categories":
+        for key, name in categories.items():
+            count = len([t for t in terms_list if t["cat"] == key])
+            print("  " + color("bold", key).ljust(12) + " " + name + " (" + str(count) + " 条)")
+        return
+
+    if cmd == "--random":
+        t = random.choice(terms_list)
+        show_term(t)
+        return
+
+    if cmd == "--search":
+        if len(args) < 2:
+            print(color("red", "用法") + ": heihua --search <关键词>")
+            sys.exit(1)
+        query = args[1]
+        matches = []
+        q = query.lower().strip()
+        for t in terms_list:
+            dist = fuzzy_match(q, t["id"] + t["zh"] + t["en"] + t["one"])
+            if dist <= 4:
+                matches.append((dist, t))
+        matches.sort(key=lambda x: x[0])
+        if not matches:
+            print("\n  " + color("dim", "未找到匹配") + ": " + query)
+            print("  " + color("dim", "试试") + ": heihua --list 或 heihua --help\n")
+            sys.exit(1)
+        search_title = "搜索 \"" + query + "\""
+        print("\n  " + color("bold", search_title) + " — " + str(len(matches)) + " 条匹配\n")
+        for _, t in matches[:15]:
+            show_compact(t)
+        if len(matches) > 15:
+            remaining = "... 还有 " + str(len(matches) - 15) + " 条，请缩小搜索范围"
+            print("\n  " + color("dim", remaining))
+        print()
+        return
+
+    if cmd == "--stats":
+        print("\n  " + color("bold", "AI 黑话词典") + " · 统计")
+        print("  " + color("dim", "─" * 30))
+        print("  总词条:  " + color("cyan", str(len(terms_list))))
+        print("  分类:    " + str(len(categories)))
+        for key, name in categories.items():
+            count = len([t for t in terms_list if t["cat"] == key])
+            pct = count / len(terms_list) * 100
+            bar = "█" * int(pct / 5) + "░" * (20 - int(pct / 5))
+            print("    " + key.ljust(8) + " " + bar + " " + str(count))
+        print()
+        return
+
+    if cmd.startswith("--"):
+        print(color("red", "未知选项") + ": " + cmd)
+        print("试试: heihua --help")
+        sys.exit(1)
+
+    for i, arg in enumerate(args):
+        if i > 0:
+            print()
+        t, method = search(arg)
+        if t:
+            show_term(t)
+        else:
+            matches = []
+            q = arg.lower().strip()
+            for term in terms_list:
+                dist = fuzzy_match(q, term["id"] + term["zh"] + term["en"])
+                if dist <= 2:
+                    matches.append((dist, term))
+            matches.sort(key=lambda x: x[0])
+            if matches:
+                print("\n  " + color("yellow", "未精确找到 \"" + arg + "\"，显示最接近的结果:") + "\n")
+                for _, mt in matches[:3]:
+                    show_compact(mt)
+                print()
+            else:
+                print("\n  " + color("red", "未找到") + ": " + arg)
+                print("  " + color("dim", "试试: heihua --list 或 heihua --search") + " " + arg + "\n")
+                sys.exit(1)
+
+if __name__ == "__main__":
+    main()
 PY

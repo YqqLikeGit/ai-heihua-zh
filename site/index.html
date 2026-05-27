@@ -1,25 +1,967 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AI 黑话词典 · 99 词条</title>
-<style>
-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;max-width:960px;margin:0 auto;padding:24px;line-height:1.6;background:#0d1117;color:#e6edf3}
-a{color:#58a6ff} h1{font-size:1.8rem} table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{border:1px solid #30363d;padding:8px;text-align:left} th{background:#161b22}
-.cta{background:#238636;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;display:inline-block;margin:16px 0;font-weight:600}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 黑话词典 — 5 分钟搞懂一个概念</title>
+  <meta name="description" content="程序员必备的 AI &amp; 编程黑话词典。覆盖 GitHub、MCP、Agent、RAG、LLM、Cursor 等 130+ 词条，中英对照 + 人话比喻 + 终端查词。">
+  <meta name="keywords" content="AI黑话,编程术语,编程词典,程序员词典,GitHub教程,AI入门,MCP,Agent,RAG,LLM,Cursor">
+  <meta property="og:title" content="AI 黑话词典 — 5 分钟搞懂一个概念">
+  <meta property="og:description" content="程序员必备的 AI &amp; 编程黑话词典。覆盖 GitHub、MCP、Agent、RAG、LLM、Cursor 等 130+ 词条，中英对照 + 人话比喻 + 终端查词。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yqqlikegit.github.io/ai-heihua-zh/">
+  <meta property="og:site_name" content="AI 黑话词典">
+  <meta property="og:image" content="https://yqqlikegit.github.io/ai-heihua-zh/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI 黑话词典 — 5 分钟搞懂一个概念">
+  <meta name="twitter:description" content="程序员必备的 AI &amp; 编程黑话词典。覆盖 GitHub、MCP、Agent、RAG、LLM、Cursor 等 130+ 词条，中英对照 + 人话比喻 + 终端查词。">
+  <link rel="canonical" href="https://yqqlikegit.github.io/ai-heihua-zh/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px;scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans SC",sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.6;min-height:100vh}
+    a{color:#58a6ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:960px;margin:0 auto;padding:0 20px}
+    header{background:#161b22;border-bottom:1px solid #30363d;position:sticky;top:0;z-index:10}
+    header .container{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+    header .logo{font-size:18px;font-weight:700;color:#f0f6fc;white-space:nowrap}
+    header .logo span{color:#8b949e;font-weight:400;font-size:14px;margin-left:6px}
+    header input{flex:1;max-width:360px;height:36px;border-radius:6px;border:1px solid #30363d;background:#0d1117;color:#c9d1d9;padding:0 12px;font-size:14px;outline:none}
+    header input:focus{border-color:#58a6ff}
+    header input::placeholder{color:#484f58}
+    .hero{padding:60px 0 40px;text-align:center}
+    .hero h1{font-size:clamp(28px,5vw,42px);color:#f0f6fc;margin-bottom:12px;letter-spacing:-0.02em}
+    .hero p{font-size:16px;color:#8b949e;max-width:560px;margin:0 auto 24px}
+    .hero .stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;color:#8b949e;font-size:13px}
+    .hero .stats strong{color:#f0f6fc;font-size:20px;display:block}
+    .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin:24px 0 40px}
+    .cat-card{display:block;padding:18px 16px;border:1px solid #30363d;border-radius:10px;background:#161b22;transition:border-color .2s,background .2s}
+    .cat-card:hover{border-color:#58a6ff;background:#1c2129;text-decoration:none}
+    .cat-card .icon{font-size:24px;margin-bottom:6px}
+    .cat-card .name{font-size:15px;font-weight:600;color:#f0f6fc}
+    .cat-card .count{font-size:12px;color:#8b949e;margin-top:2px}
+    .section-title{font-size:20px;font-weight:700;color:#f0f6fc;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid #30363d}
+    .term-row{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid #21262d;font-size:14px}
+    .term-row .t-id{color:#58a6ff;font-weight:600;min-width:80px;font-family:ui-monospace,SFMono-Regular,monospace;font-size:13px}
+    .term-row .t-zh{color:#f0f6fc;min-width:100px}
+    .term-row .t-one{color:#8b949e;flex:1;font-size:13px}
+    .term-row .t-tag{font-size:10px;text-transform:uppercase;padding:2px 8px;border-radius:10px;background:#21262d;color:#8b949e;white-space:nowrap}
+    footer{margin-top:60px;padding:32px 0;border-top:1px solid #30363d;text-align:center;font-size:13px;color:#484f58}
+    footer a{color:#8b949e}
+    .no-results{text-align:center;padding:40px 0;color:#8b949e}
+    .back-link{display:inline-flex;align-items:center;gap:4px;font-size:14px;color:#8b949e;margin-bottom:16px}
+    .back-link:hover{color:#c9d1d9}
+    .highlight{color:#f0f6fc;font-weight:600}
+    @media(max-width:600px){
+      header .container{flex-wrap:wrap;height:auto;padding:10px 20px}
+      header input{max-width:100%;order:3;flex-basis:100%}
+      .cat-grid{grid-template-columns:repeat(2,1fr)}
+      .term-row{flex-wrap:wrap}
+      .term-row .t-id{min-width:auto}
+    }
+  </style>
 </head>
 <body>
-<h1>AI 黑话词典</h1>
-<p>程序员 & AI 时代 · 99 条中英对照 · <a href="https://github.com/YqqLikeGit/ai-heihua-zh">GitHub 仓库</a></p>
-<a class="cta" href="https://github.com/YqqLikeGit/ai-heihua-zh">⭐ Star on GitHub</a>
-<table>
-<thead><tr><th>中文</th><th>English</th><th>一句话</th><th></th></tr></thead>
-<tbody>
-<tr><td><b>GitHub</b></td><td>GitHub</td><td>全球最大的代码托管与开源协作平台，程序员的「代码朋友圈」</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/github.md'>详解</a></td></tr><tr><td><b>Star / 星星</b></td><td>Star</td><td>给项目点赞收藏，表示「这个有用」</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/star.md'>详解</a></td></tr><tr><td><b>Fork / 复刻</b></td><td>Fork</td><td>复制别人的仓库到你账号下，可自由修改</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/fork.md'>详解</a></td></tr><tr><td><b>Pull Request / PR</b></td><td>Pull Request</td><td>请求把你的改动合并进原项目</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/pull-request.md'>详解</a></td></tr><tr><td><b>Issue / 议题</b></td><td>Issue</td><td>提 Bug、提需求、讨论问题的工单</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/issue.md'>详解</a></td></tr><tr><td><b>Clone / 克隆</b></td><td>Clone</td><td>把远程仓库完整下载到本机</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/clone.md'>详解</a></td></tr><tr><td><b>Commit / 提交</b></td><td>Commit</td><td>保存一次代码快照，附带说明</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/commit.md'>详解</a></td></tr><tr><td><b>Branch / 分支</b></td><td>Branch</td><td>平行开发线，互不影响</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/branch.md'>详解</a></td></tr><tr><td><b>Merge / 合并</b></td><td>Merge</td><td>把分支改动合进主分支</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/merge.md'>详解</a></td></tr><tr><td><b>Repository / 仓库</b></td><td>Repository</td><td>存放项目全部文件与历史的文件夹</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/repository.md'>详解</a></td></tr><tr><td><b>开源</b></td><td>Open Source</td><td>公开源代码，他人可查看、使用、贡献</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/open-source.md'>详解</a></td></tr><tr><td><b>开源协议</b></td><td>License</td><td>规定别人如何使用你的代码</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/license.md'>详解</a></td></tr><tr><td><b>README</b></td><td>README</td><td>项目首页说明，第一眼看到的内容</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/readme.md'>详解</a></td></tr><tr><td><b>Release / 发行版</b></td><td>Release</td><td>打包标记的稳定版本，方便下载</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/release.md'>详解</a></td></tr><tr><td><b>Contributor / 贡献者</b></td><td>Contributor</td><td>参与过项目代码或文档的人</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/github/contributor.md'>详解</a></td></tr><tr><td><b>大语言模型</b></td><td>LLM</td><td>读懂并生成人类语言的 AI 模型</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/llm.md'>详解</a></td></tr><tr><td><b>Token / 词元</b></td><td>Token</td><td>模型处理文本的最小单位，影响计费与长度</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/token.md'>详解</a></td></tr><tr><td><b>提示词</b></td><td>Prompt</td><td>你给 AI 的指令或问题</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/prompt.md'>详解</a></td></tr><tr><td><b>RAG / 检索增强</b></td><td>RAG</td><td>先查资料再回答，减少胡编</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/rag.md'>详解</a></td></tr><tr><td><b>Agent / 智能体</b></td><td>Agent</td><td>能自己规划步骤、调用工具的 AI</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/agent.md'>详解</a></td></tr><tr><td><b>MCP</b></td><td>Model Context Protocol</td><td>AI 连接外部工具和数据的标准「插座」</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/mcp.md'>详解</a></td></tr><tr><td><b>Skills / 技能</b></td><td>Skills</td><td>教 AI 在特定场景下怎么做事的说明书</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/skills.md'>详解</a></td></tr><tr><td><b>函数调用</b></td><td>Function Calling</td><td>AI 决定调用哪个 API 并传参数</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/function-calling.md'>详解</a></td></tr><tr><td><b>向量嵌入</b></td><td>Embedding</td><td>把文字变成数字向量，便于语义搜索</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/embedding.md'>详解</a></td></tr><tr><td><b>微调</b></td><td>Fine-tuning</td><td>在通用模型上继续训练以适应特定任务</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/fine-tuning.md'>详解</a></td></tr><tr><td><b>幻觉</b></td><td>Hallucination</td><td>AI 自信地编造不存在的事实</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/hallucination.md'>详解</a></td></tr><tr><td><b>上下文窗口</b></td><td>Context Window</td><td>模型一次能「记住」的对话长度上限</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/context-window.md'>详解</a></td></tr><tr><td><b>温度</b></td><td>Temperature</td><td>控制输出随机性，越高越发散</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/temperature.md'>详解</a></td></tr><tr><td><b>系统提示</b></td><td>System Prompt</td><td>设定 AI 角色与行为边界的隐藏指令</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/system-prompt.md'>详解</a></td></tr><tr><td><b>推理</b></td><td>Inference</td><td>模型运行生成结果的过程</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/inference.md'>详解</a></td></tr><tr><td><b>训练</b></td><td>Training</td><td>用数据调整模型参数的学习过程</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/training.md'>详解</a></td></tr><tr><td><b>多模态</b></td><td>Multimodal</td><td>同时理解文字、图片、音频等</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/multimodal.md'>详解</a></td></tr><tr><td><b>氛围编程</b></td><td>Vibe Coding</td><td>用自然语言描述意图，让 AI 写大部分代码</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/vibe-coding.md'>详解</a></td></tr><tr><td><b>Harness / 驾驭工程</b></td><td>Harness Engineering</td><td>给 AI Agent 设计可控、可验证的工作环境</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/harness.md'>详解</a></td></tr><tr><td><b>工具使用</b></td><td>Tool Use</td><td>AI 调用搜索、代码执行等外部能力</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/tool-use.md'>详解</a></td></tr><tr><td><b>思维链</b></td><td>Chain-of-Thought</td><td>让 AI 分步推理，提高复杂题正确率</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/chain-of-thought.md'>详解</a></td></tr><tr><td><b>护栏</b></td><td>Guardrails</td><td>限制 AI 输出范围的安全规则</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/ai/guardrails.md'>详解</a></td></tr><tr><td><b>Cursor</b></td><td>Cursor</td><td>内置 AI 的代码编辑器，基于 VS Code</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/cursor.md'>详解</a></td></tr><tr><td><b>Copilot / 副驾驶</b></td><td>Copilot</td><td>AI 在编码时实时补全与建议</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/copilot.md'>详解</a></td></tr><tr><td><b>Claude Code</b></td><td>Claude Code</td><td>Anthropic 的终端 AI 编程 Agent</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/claude-code.md'>详解</a></td></tr><tr><td><b>Claude Desktop</b></td><td>Claude Desktop</td><td>Anthropic 官方桌面聊天客户端</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/claude-desktop.md'>详解</a></td></tr><tr><td><b>Rules / 规则</b></td><td>Rules</td><td>持久化告诉 AI 项目规范与偏好</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/rules.md'>详解</a></td></tr><tr><td><b>Composer</b></td><td>Composer</td><td>Cursor 中多文件协同编辑的 AI 模式</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/composer.md'>详解</a></td></tr><tr><td><b>Tab 补全</b></td><td>Tab Completion</td><td>按 Tab 接受 AI 生成的代码建议</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/tab-complete.md'>详解</a></td></tr><tr><td><b>代码库索引</b></td><td>Codebase Index</td><td>AI 理解整个项目结构的预处理</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/codebase-index.md'>详解</a></td></tr><tr><td><b>MCP 服务器</b></td><td>MCP Server</td><td>对外暴露工具能力，供 AI 客户端连接</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/mcp-server.md'>详解</a></td></tr><tr><td><b>Agent 模式</b></td><td>Agent Mode</td><td>AI 自动多步执行：读文件、改代码、跑命令</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cursor/agent-mode.md'>详解</a></td></tr><tr><td><b>API</b></td><td>API</td><td>程序之间对话的约定接口</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/api.md'>详解</a></td></tr><tr><td><b>REST</b></td><td>REST</td><td>用 HTTP 动词操作资源的 API 风格</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/rest.md'>详解</a></td></tr><tr><td><b>JSON</b></td><td>JSON</td><td>轻量数据交换格式，键值对嵌套</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/json.md'>详解</a></td></tr><tr><td><b>Docker</b></td><td>Docker</td><td>把应用和环境打包成容器运行</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/docker.md'>详解</a></td></tr><tr><td><b>K8s</b></td><td>Kubernetes</td><td>编排大量容器的集群管理系统</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/kubernetes.md'>详解</a></td></tr><tr><td><b>CI/CD</b></td><td>CI/CD</td><td>自动测试构建并部署代码流水线</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/ci-cd.md'>详解</a></td></tr><tr><td><b>Git</b></td><td>Git</td><td>分布式版本控制工具，跟踪代码变更</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/git.md'>详解</a></td></tr><tr><td><b>调试</b></td><td>Debug</td><td>定位并修复程序错误</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/debug.md'>详解</a></td></tr><tr><td><b>重构</b></td><td>Refactor</td><td>不改功能前提下优化代码结构</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/refactor.md'>详解</a></td></tr><tr><td><b>依赖</b></td><td>Dependency</td><td>项目运行需要引用的第三方库</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/dependency.md'>详解</a></td></tr><tr><td><b>框架</b></td><td>Framework</td><td>半成品脚手架，规定代码组织方式</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/framework.md'>详解</a></td></tr><tr><td><b>库</b></td><td>Library</td><td>可复用的函数/组件集合</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/library.md'>详解</a></td></tr><tr><td><b>数据库</b></td><td>Database</td><td>结构化存储与查询数据</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/database.md'>详解</a></td></tr><tr><td><b>缓存</b></td><td>Cache</td><td>把常用数据放近处加速读取</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/cache.md'>详解</a></td></tr><tr><td><b>中间件</b></td><td>Middleware</td><td>请求处理链中的通用逻辑层</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/middleware.md'>详解</a></td></tr><tr><td><b>微服务</b></td><td>Microservice</td><td>把大系统拆成多个小服务独立部署</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/microservice.md'>详解</a></td></tr><tr><td><b>单体应用</b></td><td>Monolith</td><td>所有功能在一个程序里</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/monolith.md'>详解</a></td></tr><tr><td><b>OAuth</b></td><td>OAuth</td><td>第三方授权登录，不暴露密码</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/oauth.md'>详解</a></td></tr><tr><td><b>JWT</b></td><td>JWT</td><td>自包含的加密身份令牌</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/jwt.md'>详解</a></td></tr><tr><td><b>SQL</b></td><td>SQL</td><td>操作关系型数据库的语言</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/sql.md'>详解</a></td></tr><tr><td><b>NoSQL</b></td><td>NoSQL</td><td>非关系型数据库，灵活 schema</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/nosql.md'>详解</a></td></tr><tr><td><b>延迟</b></td><td>Latency</td><td>请求发出到收到响应的时间</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/latency.md'>详解</a></td></tr><tr><td><b>吞吐量</b></td><td>Throughput</td><td>单位时间处理的请求量</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/throughput.md'>详解</a></td></tr><tr><td><b>可扩展性</b></td><td>Scalability</td><td>系统应对流量增长的能力</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/scalability.md'>详解</a></td></tr><tr><td><b>死锁</b></td><td>Deadlock</td><td>两个任务互相等待对方释放资源</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/deadlock.md'>详解</a></td></tr><tr><td><b>竞态条件</b></td><td>Race Condition</td><td>多线程时序不确定导致结果异常</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/race-condition.md'>详解</a></td></tr><tr><td><b>递归</b></td><td>Recursion</td><td>函数调用自身</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/recursion.md'>详解</a></td></tr><tr><td><b>闭包</b></td><td>Closure</td><td>函数记住定义时的外部变量</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/closure.md'>详解</a></td></tr><tr><td><b>异步</b></td><td>Async</td><td>不阻塞等待，完成后回调</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/async.md'>详解</a></td></tr><tr><td><b>同步</b></td><td>Sync</td><td>一步一步等前一步完成</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/sync.md'>详解</a></td></tr><tr><td><b>面向对象</b></td><td>OOP</td><td>用对象封装数据与行为</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/oop.md'>详解</a></td></tr><tr><td><b>函数式</b></td><td>Functional</td><td>用纯函数组合构建程序</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/cs/functional.md'>详解</a></td></tr><tr><td><b>HTML</b></td><td>HTML</td><td>网页结构的标记语言</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/html.md'>详解</a></td></tr><tr><td><b>CSS</b></td><td>CSS</td><td>控制网页样式与布局</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/css.md'>详解</a></td></tr><tr><td><b>JavaScript</b></td><td>JavaScript</td><td>浏览器与 Node 的脚本语言</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/javascript.md'>详解</a></td></tr><tr><td><b>TypeScript</b></td><td>TypeScript</td><td>带类型的 JavaScript 超集</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/typescript.md'>详解</a></td></tr><tr><td><b>React</b></td><td>React</td><td>组件化 UI 库，Facebook 出品</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/react.md'>详解</a></td></tr><tr><td><b>Vue</b></td><td>Vue</td><td>渐进式前端框架，国内流行</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/vue.md'>详解</a></td></tr><tr><td><b>Node.js</b></td><td>Node.js</td><td>服务器端运行 JavaScript</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/nodejs.md'>详解</a></td></tr><tr><td><b>打包工具</b></td><td>Bundler</td><td>合并压缩前端资源</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/webpack.md'>详解</a></td></tr><tr><td><b>SEO</b></td><td>SEO</td><td>让搜索引擎更好收录网站</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/seo.md'>详解</a></td></tr><tr><td><b>服务端渲染</b></td><td>SSR</td><td>服务器生成 HTML 再发给浏览器</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/ssr.md'>详解</a></td></tr><tr><td><b>单页应用</b></td><td>SPA</td><td>一个 HTML 页内切换视图</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/spa.md'>详解</a></td></tr><tr><td><b>CDN</b></td><td>CDN</td><td>就近缓存静态资源加速访问</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/cdn.md'>详解</a></td></tr><tr><td><b>WebSocket</b></td><td>WebSocket</td><td>浏览器与服务器双向实时通道</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/websocket.md'>详解</a></td></tr><tr><td><b>GraphQL</b></td><td>GraphQL</td><td>客户端指定要哪些字段的查询语言</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/graphql.md'>详解</a></td></tr><tr><td><b>HTTP</b></td><td>HTTP</td><td>浏览器与服务器通信协议</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/http.md'>详解</a></td></tr><tr><td><b>HTTPS</b></td><td>HTTPS</td><td>加密的 HTTP</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/https.md'>详解</a></td></tr><tr><td><b>DNS</b></td><td>DNS</td><td>域名翻译成 IP 地址</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/dns.md'>详解</a></td></tr><tr><td><b>TCP</b></td><td>TCP</td><td>可靠有序的数据传输协议</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/tcp.md'>详解</a></td></tr><tr><td><b>UDP</b></td><td>UDP</td><td>快速但可能丢包传输</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/udp.md'>详解</a></td></tr><tr><td><b>本地主机</b></td><td>Localhost</td><td>本机地址 127.0.0.1</td><td><a href='https://github.com/YqqLikeGit/ai-heihua-zh/blob/main/glossary/web/localhost.md'>详解</a></td></tr>
-</tbody>
-</table>
-<p>CLI: <code>git clone ... && ./bin/heihua star</code></p>
-</body></html>
+<header>
+  <div class="container">
+    <a href="/ai-heihua-zh/" class="logo" style="text-decoration:none">📖 AI 黑话词典 <span>by RUDY YU</span></a>
+    <input id="search" type="text" placeholder="搜索词条... 如 mcp、agent、star" aria-label="搜索词条">
+  </div>
+</header>
+<main class="container">
+  <div class="hero">
+    <h1>AI 黑话词典</h1>
+    <p>程序员 & AI 时代黑话图解。MCP、Agent、RAG、Star、LLM…<br>5 分钟搞懂一个概念，收藏这一个就够了。</p>
+    <div class="stats">
+      <div><strong>133</strong>词条</div>
+      <div><strong>5</strong>分类</div>
+      <div><strong>中英</strong>对照</div>
+      <div><strong>CLI</strong>查词</div>
+    </div>
+    <p style="margin-top:16px"><code style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px 14px;font-size:13px;color:#7ee787">git clone https://github.com/YqqLikeGit/ai-heihua-zh.git && cd ai-heihua-zh && ./bin/heihua mcp</code></p>
+  </div>
+
+  <div class="cat-grid">
+    
+    <a class="cat-card" href="#cat-github">
+      <div class="icon">🐙</div>
+      <div class="name">GitHub & 开源</div>
+      <div class="count">22 条</div>
+    </a>
+    <a class="cat-card" href="#cat-ai">
+      <div class="icon">🤖</div>
+      <div class="name">AI & 大模型</div>
+      <div class="count">32 条</div>
+    </a>
+    <a class="cat-card" href="#cat-cursor">
+      <div class="icon">⚡</div>
+      <div class="name">Cursor & Claude Code</div>
+      <div class="count">15 条</div>
+    </a>
+    <a class="cat-card" href="#cat-cs">
+      <div class="icon">💻</div>
+      <div class="name">计算机基础</div>
+      <div class="count">40 条</div>
+    </a>
+    <a class="cat-card" href="#cat-web">
+      <div class="icon">🌐</div>
+      <div class="name">Web & 网络</div>
+      <div class="count">24 条</div>
+    </a>
+  </div>
+
+  <p id="results-hint" style="font-size:12px;color:#484f58;text-align:center"></p>
+  <div id="no-results" class="no-results" style="display:none">
+    <p>没有匹配的词条。试试其他关键词？</p>
+    <p style="margin-top:8px;font-size:13px">或<a href="https://github.com/YqqLikeGit/ai-heihua-zh/issues">提 Issue</a>建议新增词条</p>
+  </div>
+
+  
+  <h2 id="cat-github" class="section-title">🐙 GitHub & 开源 (22 条)</h2>
+  
+  <div class="term-row">
+    <span class="t-id">github</span>
+    <span class="t-zh">GitHub</span>
+    <span class="t-one">全球最大的代码托管与开源协作平台，程序员的「代码朋友圈」</span>
+    <span class="t-tag">GitHub</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">star</span>
+    <span class="t-zh">Star / 星星</span>
+    <span class="t-one">给项目点赞收藏，表示「这个有用」</span>
+    <span class="t-tag">Star</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">fork</span>
+    <span class="t-zh">Fork / 复刻</span>
+    <span class="t-one">复制别人的仓库到你账号下，可自由修改</span>
+    <span class="t-tag">Fork</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">pull-request</span>
+    <span class="t-zh">Pull Request / PR</span>
+    <span class="t-one">请求把你的改动合并进原项目</span>
+    <span class="t-tag">Pull Request</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">issue</span>
+    <span class="t-zh">Issue / 议题</span>
+    <span class="t-one">提 Bug、提需求、讨论问题的工单</span>
+    <span class="t-tag">Issue</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">clone</span>
+    <span class="t-zh">Clone / 克隆</span>
+    <span class="t-one">把远程仓库完整下载到本机</span>
+    <span class="t-tag">Clone</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">commit</span>
+    <span class="t-zh">Commit / 提交</span>
+    <span class="t-one">保存一次代码快照，附带说明</span>
+    <span class="t-tag">Commit</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">branch</span>
+    <span class="t-zh">Branch / 分支</span>
+    <span class="t-one">平行开发线，互不影响</span>
+    <span class="t-tag">Branch</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">merge</span>
+    <span class="t-zh">Merge / 合并</span>
+    <span class="t-one">把分支改动合进主分支</span>
+    <span class="t-tag">Merge</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">repository</span>
+    <span class="t-zh">Repository / 仓库</span>
+    <span class="t-one">存放项目全部文件与历史的文件夹</span>
+    <span class="t-tag">Repository</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">open-source</span>
+    <span class="t-zh">开源</span>
+    <span class="t-one">公开源代码，他人可查看、使用、贡献</span>
+    <span class="t-tag">Open Source</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">license</span>
+    <span class="t-zh">开源协议</span>
+    <span class="t-one">规定别人如何使用你的代码</span>
+    <span class="t-tag">License</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">readme</span>
+    <span class="t-zh">README</span>
+    <span class="t-one">项目首页说明，第一眼看到的内容</span>
+    <span class="t-tag">README</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">release</span>
+    <span class="t-zh">Release / 发行版</span>
+    <span class="t-one">打包标记的稳定版本，方便下载</span>
+    <span class="t-tag">Release</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">contributor</span>
+    <span class="t-zh">Contributor / 贡献者</span>
+    <span class="t-one">参与过项目代码或文档的人</span>
+    <span class="t-tag">Contributor</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">watch</span>
+    <span class="t-zh">Watch / 关注</span>
+    <span class="t-one">订阅仓库动态通知</span>
+    <span class="t-tag">Watch</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">actions</span>
+    <span class="t-zh">GitHub Actions</span>
+    <span class="t-one">在 GitHub 上自动跑 CI/CD 流水线</span>
+    <span class="t-tag">GitHub Actions</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">discussions</span>
+    <span class="t-zh">Discussions</span>
+    <span class="t-one">仓库内的论坛式讨论区</span>
+    <span class="t-tag">Discussions</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">gist</span>
+    <span class="t-zh">Gist</span>
+    <span class="t-one">GitHub 的代码片段分享</span>
+    <span class="t-tag">Gist</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">upstream</span>
+    <span class="t-zh">上游</span>
+    <span class="t-one">你 Fork 的原仓库</span>
+    <span class="t-tag">Upstream</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">downstream</span>
+    <span class="t-zh">下游</span>
+    <span class="t-one">从你的仓库 Fork 出去的副本</span>
+    <span class="t-tag">Downstream</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">markdown</span>
+    <span class="t-zh">Markdown</span>
+    <span class="t-one">轻量标记语言，README 常用</span>
+    <span class="t-tag">Markdown</span>
+  </div>
+  
+  <h2 id="cat-ai" class="section-title">🤖 AI & 大模型 (32 条)</h2>
+  
+  <div class="term-row">
+    <span class="t-id">llm</span>
+    <span class="t-zh">大语言模型</span>
+    <span class="t-one">读懂并生成人类语言的 AI 模型</span>
+    <span class="t-tag">LLM</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">token</span>
+    <span class="t-zh">Token / 词元</span>
+    <span class="t-one">模型处理文本的最小单位，影响计费与长度</span>
+    <span class="t-tag">Token</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">prompt</span>
+    <span class="t-zh">提示词</span>
+    <span class="t-one">你给 AI 的指令或问题</span>
+    <span class="t-tag">Prompt</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">rag</span>
+    <span class="t-zh">RAG / 检索增强</span>
+    <span class="t-one">先查资料再回答，减少胡编</span>
+    <span class="t-tag">RAG</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">agent</span>
+    <span class="t-zh">Agent / 智能体</span>
+    <span class="t-one">能自己规划步骤、调用工具的 AI</span>
+    <span class="t-tag">Agent</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">mcp</span>
+    <span class="t-zh">MCP</span>
+    <span class="t-one">AI 连接外部工具和数据的标准「插座」</span>
+    <span class="t-tag">Model Context Protocol</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">skills</span>
+    <span class="t-zh">Skills / 技能</span>
+    <span class="t-one">教 AI 在特定场景下怎么做事的说明书</span>
+    <span class="t-tag">Skills</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">function-calling</span>
+    <span class="t-zh">函数调用</span>
+    <span class="t-one">AI 决定调用哪个 API 并传参数</span>
+    <span class="t-tag">Function Calling</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">embedding</span>
+    <span class="t-zh">向量嵌入</span>
+    <span class="t-one">把文字变成数字向量，便于语义搜索</span>
+    <span class="t-tag">Embedding</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">fine-tuning</span>
+    <span class="t-zh">微调</span>
+    <span class="t-one">在通用模型上继续训练以适应特定任务</span>
+    <span class="t-tag">Fine-tuning</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">hallucination</span>
+    <span class="t-zh">幻觉</span>
+    <span class="t-one">AI 自信地编造不存在的事实</span>
+    <span class="t-tag">Hallucination</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">context-window</span>
+    <span class="t-zh">上下文窗口</span>
+    <span class="t-one">模型一次能「记住」的对话长度上限</span>
+    <span class="t-tag">Context Window</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">temperature</span>
+    <span class="t-zh">温度</span>
+    <span class="t-one">控制输出随机性，越高越发散</span>
+    <span class="t-tag">Temperature</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">system-prompt</span>
+    <span class="t-zh">系统提示</span>
+    <span class="t-one">设定 AI 角色与行为边界的隐藏指令</span>
+    <span class="t-tag">System Prompt</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">inference</span>
+    <span class="t-zh">推理</span>
+    <span class="t-one">模型运行生成结果的过程</span>
+    <span class="t-tag">Inference</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">training</span>
+    <span class="t-zh">训练</span>
+    <span class="t-one">用数据调整模型参数的学习过程</span>
+    <span class="t-tag">Training</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">multimodal</span>
+    <span class="t-zh">多模态</span>
+    <span class="t-one">同时理解文字、图片、音频等</span>
+    <span class="t-tag">Multimodal</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">vibe-coding</span>
+    <span class="t-zh">氛围编程</span>
+    <span class="t-one">用自然语言描述意图，让 AI 写大部分代码</span>
+    <span class="t-tag">Vibe Coding</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">harness</span>
+    <span class="t-zh">Harness / 驾驭工程</span>
+    <span class="t-one">给 AI Agent 设计可控、可验证的工作环境</span>
+    <span class="t-tag">Harness Engineering</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">tool-use</span>
+    <span class="t-zh">工具使用</span>
+    <span class="t-one">AI 调用搜索、代码执行等外部能力</span>
+    <span class="t-tag">Tool Use</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">chain-of-thought</span>
+    <span class="t-zh">思维链</span>
+    <span class="t-one">让 AI 分步推理，提高复杂题正确率</span>
+    <span class="t-tag">Chain-of-Thought</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">guardrails</span>
+    <span class="t-zh">护栏</span>
+    <span class="t-one">限制 AI 输出范围的安全规则</span>
+    <span class="t-tag">Guardrails</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">quantization</span>
+    <span class="t-zh">量化</span>
+    <span class="t-one">降低模型精度以减小体积、加速推理</span>
+    <span class="t-tag">Quantization</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">distillation</span>
+    <span class="t-zh">蒸馏</span>
+    <span class="t-one">大模型教小模型，保留部分能力</span>
+    <span class="t-tag">Distillation</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">a2a</span>
+    <span class="t-zh">A2A</span>
+    <span class="t-one">多个 AI Agent 互相通信的协议</span>
+    <span class="t-tag">Agent2Agent</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">computer-use</span>
+    <span class="t-zh">Computer Use</span>
+    <span class="t-one">AI 直接操控鼠标键盘操作电脑</span>
+    <span class="t-tag">Computer Use</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">reasoning-model</span>
+    <span class="t-zh">推理模型</span>
+    <span class="t-one">花更多思考步骤换更高正确率</span>
+    <span class="t-tag">Reasoning Model</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">context-engineering</span>
+    <span class="t-zh">上下文工程</span>
+    <span class="t-one">设计喂给模型的信息与结构</span>
+    <span class="t-tag">Context Engineering</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">evals</span>
+    <span class="t-zh">评测</span>
+    <span class="t-one">系统化测试 AI 输出质量</span>
+    <span class="t-tag">Evals</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">grounding</span>
+    <span class="t-zh">事实锚定</span>
+    <span class="t-one">让回答基于可验证事实而非纯生成</span>
+    <span class="t-tag">Grounding</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">workflow</span>
+    <span class="t-zh">AI 工作流</span>
+    <span class="t-one">多个 AI 步骤串联的自动化流程</span>
+    <span class="t-tag">AI Workflow</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">subagent</span>
+    <span class="t-zh">子 Agent</span>
+    <span class="t-one">主 Agent 派生的专项小 Agent</span>
+    <span class="t-tag">Sub-agent</span>
+  </div>
+  
+  <h2 id="cat-cursor" class="section-title">⚡ Cursor & Claude Code (15 条)</h2>
+  
+  <div class="term-row">
+    <span class="t-id">cursor</span>
+    <span class="t-zh">Cursor</span>
+    <span class="t-one">内置 AI 的代码编辑器，基于 VS Code</span>
+    <span class="t-tag">Cursor</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">copilot</span>
+    <span class="t-zh">Copilot / 副驾驶</span>
+    <span class="t-one">AI 在编码时实时补全与建议</span>
+    <span class="t-tag">Copilot</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">claude-code</span>
+    <span class="t-zh">Claude Code</span>
+    <span class="t-one">Anthropic 的终端 AI 编程 Agent</span>
+    <span class="t-tag">Claude Code</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">claude-desktop</span>
+    <span class="t-zh">Claude Desktop</span>
+    <span class="t-one">Anthropic 官方桌面聊天客户端</span>
+    <span class="t-tag">Claude Desktop</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">rules</span>
+    <span class="t-zh">Rules / 规则</span>
+    <span class="t-one">持久化告诉 AI 项目规范与偏好</span>
+    <span class="t-tag">Rules</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">composer</span>
+    <span class="t-zh">Composer</span>
+    <span class="t-one">Cursor 中多文件协同编辑的 AI 模式</span>
+    <span class="t-tag">Composer</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">tab-complete</span>
+    <span class="t-zh">Tab 补全</span>
+    <span class="t-one">按 Tab 接受 AI 生成的代码建议</span>
+    <span class="t-tag">Tab Completion</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">codebase-index</span>
+    <span class="t-zh">代码库索引</span>
+    <span class="t-one">AI 理解整个项目结构的预处理</span>
+    <span class="t-tag">Codebase Index</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">mcp-server</span>
+    <span class="t-zh">MCP 服务器</span>
+    <span class="t-one">对外暴露工具能力，供 AI 客户端连接</span>
+    <span class="t-tag">MCP Server</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">agent-mode</span>
+    <span class="t-zh">Agent 模式</span>
+    <span class="t-one">AI 自动多步执行：读文件、改代码、跑命令</span>
+    <span class="t-tag">Agent Mode</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">mdc</span>
+    <span class="t-zh">MDC 规则</span>
+    <span class="t-one">Cursor 的规则文件格式 .mdc</span>
+    <span class="t-tag">MDC Rules</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">context</span>
+    <span class="t-zh">上下文</span>
+    <span class="t-one">AI 当前能看到的代码与对话</span>
+    <span class="t-tag">Context</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">diff</span>
+    <span class="t-zh">Diff</span>
+    <span class="t-one">修改前后的代码对比</span>
+    <span class="t-tag">Diff</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">inline-edit</span>
+    <span class="t-zh">行内编辑</span>
+    <span class="t-one">在编辑器里直接让 AI 改选中代码</span>
+    <span class="t-tag">Inline Edit</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">background-agent</span>
+    <span class="t-zh">后台 Agent</span>
+    <span class="t-one">在云端继续跑的 Agent 任务</span>
+    <span class="t-tag">Background Agent</span>
+  </div>
+  
+  <h2 id="cat-cs" class="section-title">💻 计算机基础 (40 条)</h2>
+  
+  <div class="term-row">
+    <span class="t-id">api</span>
+    <span class="t-zh">API</span>
+    <span class="t-one">程序之间对话的约定接口</span>
+    <span class="t-tag">API</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">rest</span>
+    <span class="t-zh">REST</span>
+    <span class="t-one">用 HTTP 动词操作资源的 API 风格</span>
+    <span class="t-tag">REST</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">json</span>
+    <span class="t-zh">JSON</span>
+    <span class="t-one">轻量数据交换格式，键值对嵌套</span>
+    <span class="t-tag">JSON</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">docker</span>
+    <span class="t-zh">Docker</span>
+    <span class="t-one">把应用和环境打包成容器运行</span>
+    <span class="t-tag">Docker</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">kubernetes</span>
+    <span class="t-zh">K8s</span>
+    <span class="t-one">编排大量容器的集群管理系统</span>
+    <span class="t-tag">Kubernetes</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">ci-cd</span>
+    <span class="t-zh">CI/CD</span>
+    <span class="t-one">自动测试构建并部署代码流水线</span>
+    <span class="t-tag">CI/CD</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">git</span>
+    <span class="t-zh">Git</span>
+    <span class="t-one">分布式版本控制工具，跟踪代码变更</span>
+    <span class="t-tag">Git</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">debug</span>
+    <span class="t-zh">调试</span>
+    <span class="t-one">定位并修复程序错误</span>
+    <span class="t-tag">Debug</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">refactor</span>
+    <span class="t-zh">重构</span>
+    <span class="t-one">不改功能前提下优化代码结构</span>
+    <span class="t-tag">Refactor</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">dependency</span>
+    <span class="t-zh">依赖</span>
+    <span class="t-one">项目运行需要引用的第三方库</span>
+    <span class="t-tag">Dependency</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">framework</span>
+    <span class="t-zh">框架</span>
+    <span class="t-one">半成品脚手架，规定代码组织方式</span>
+    <span class="t-tag">Framework</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">library</span>
+    <span class="t-zh">库</span>
+    <span class="t-one">可复用的函数/组件集合</span>
+    <span class="t-tag">Library</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">database</span>
+    <span class="t-zh">数据库</span>
+    <span class="t-one">结构化存储与查询数据</span>
+    <span class="t-tag">Database</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">cache</span>
+    <span class="t-zh">缓存</span>
+    <span class="t-one">把常用数据放近处加速读取</span>
+    <span class="t-tag">Cache</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">middleware</span>
+    <span class="t-zh">中间件</span>
+    <span class="t-one">请求处理链中的通用逻辑层</span>
+    <span class="t-tag">Middleware</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">microservice</span>
+    <span class="t-zh">微服务</span>
+    <span class="t-one">把大系统拆成多个小服务独立部署</span>
+    <span class="t-tag">Microservice</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">monolith</span>
+    <span class="t-zh">单体应用</span>
+    <span class="t-one">所有功能在一个程序里</span>
+    <span class="t-tag">Monolith</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">oauth</span>
+    <span class="t-zh">OAuth</span>
+    <span class="t-one">第三方授权登录，不暴露密码</span>
+    <span class="t-tag">OAuth</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">jwt</span>
+    <span class="t-zh">JWT</span>
+    <span class="t-one">自包含的加密身份令牌</span>
+    <span class="t-tag">JWT</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">sql</span>
+    <span class="t-zh">SQL</span>
+    <span class="t-one">操作关系型数据库的语言</span>
+    <span class="t-tag">SQL</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">nosql</span>
+    <span class="t-zh">NoSQL</span>
+    <span class="t-one">非关系型数据库，灵活 schema</span>
+    <span class="t-tag">NoSQL</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">latency</span>
+    <span class="t-zh">延迟</span>
+    <span class="t-one">请求发出到收到响应的时间</span>
+    <span class="t-tag">Latency</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">throughput</span>
+    <span class="t-zh">吞吐量</span>
+    <span class="t-one">单位时间处理的请求量</span>
+    <span class="t-tag">Throughput</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">scalability</span>
+    <span class="t-zh">可扩展性</span>
+    <span class="t-one">系统应对流量增长的能力</span>
+    <span class="t-tag">Scalability</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">deadlock</span>
+    <span class="t-zh">死锁</span>
+    <span class="t-one">两个任务互相等待对方释放资源</span>
+    <span class="t-tag">Deadlock</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">race-condition</span>
+    <span class="t-zh">竞态条件</span>
+    <span class="t-one">多线程时序不确定导致结果异常</span>
+    <span class="t-tag">Race Condition</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">recursion</span>
+    <span class="t-zh">递归</span>
+    <span class="t-one">函数调用自身</span>
+    <span class="t-tag">Recursion</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">closure</span>
+    <span class="t-zh">闭包</span>
+    <span class="t-one">函数记住定义时的外部变量</span>
+    <span class="t-tag">Closure</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">async</span>
+    <span class="t-zh">异步</span>
+    <span class="t-one">不阻塞等待，完成后回调</span>
+    <span class="t-tag">Async</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">sync</span>
+    <span class="t-zh">同步</span>
+    <span class="t-one">一步一步等前一步完成</span>
+    <span class="t-tag">Sync</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">oop</span>
+    <span class="t-zh">面向对象</span>
+    <span class="t-one">用对象封装数据与行为</span>
+    <span class="t-tag">OOP</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">functional</span>
+    <span class="t-zh">函数式</span>
+    <span class="t-one">用纯函数组合构建程序</span>
+    <span class="t-tag">Functional</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">devcontainer</span>
+    <span class="t-zh">开发容器</span>
+    <span class="t-one">标准化 Docker 开发环境</span>
+    <span class="t-tag">Dev Container</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">env-var</span>
+    <span class="t-zh">环境变量</span>
+    <span class="t-one">程序外配置，如 API Key</span>
+    <span class="t-tag">Environment Variable</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">semver</span>
+    <span class="t-zh">语义化版本</span>
+    <span class="t-one">主.次.补丁 版本号约定</span>
+    <span class="t-tag">SemVer</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">lint</span>
+    <span class="t-zh">Lint</span>
+    <span class="t-one">静态检查代码风格与常见错误</span>
+    <span class="t-tag">Lint</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">unit-test</span>
+    <span class="t-zh">单元测试</span>
+    <span class="t-one">测试最小代码单元是否正确</span>
+    <span class="t-tag">Unit Test</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">integration-test</span>
+    <span class="t-zh">集成测试</span>
+    <span class="t-one">测试多个模块联调是否正常</span>
+    <span class="t-tag">Integration Test</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">technical-debt</span>
+    <span class="t-zh">技术债</span>
+    <span class="t-one">为赶进度留下的需日后偿还的代码问题</span>
+    <span class="t-tag">Technical Debt</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">singleton</span>
+    <span class="t-zh">单例</span>
+    <span class="t-one">全局只允许一个实例的设计模式</span>
+    <span class="t-tag">Singleton</span>
+  </div>
+  
+  <h2 id="cat-web" class="section-title">🌐 Web & 网络 (24 条)</h2>
+  
+  <div class="term-row">
+    <span class="t-id">html</span>
+    <span class="t-zh">HTML</span>
+    <span class="t-one">网页结构的标记语言</span>
+    <span class="t-tag">HTML</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">css</span>
+    <span class="t-zh">CSS</span>
+    <span class="t-one">控制网页样式与布局</span>
+    <span class="t-tag">CSS</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">javascript</span>
+    <span class="t-zh">JavaScript</span>
+    <span class="t-one">浏览器与 Node 的脚本语言</span>
+    <span class="t-tag">JavaScript</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">typescript</span>
+    <span class="t-zh">TypeScript</span>
+    <span class="t-one">带类型的 JavaScript 超集</span>
+    <span class="t-tag">TypeScript</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">react</span>
+    <span class="t-zh">React</span>
+    <span class="t-one">组件化 UI 库，Facebook 出品</span>
+    <span class="t-tag">React</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">vue</span>
+    <span class="t-zh">Vue</span>
+    <span class="t-one">渐进式前端框架，国内流行</span>
+    <span class="t-tag">Vue</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">nodejs</span>
+    <span class="t-zh">Node.js</span>
+    <span class="t-one">服务器端运行 JavaScript</span>
+    <span class="t-tag">Node.js</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">webpack</span>
+    <span class="t-zh">打包工具</span>
+    <span class="t-one">合并压缩前端资源</span>
+    <span class="t-tag">Bundler</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">seo</span>
+    <span class="t-zh">SEO</span>
+    <span class="t-one">让搜索引擎更好收录网站</span>
+    <span class="t-tag">SEO</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">ssr</span>
+    <span class="t-zh">服务端渲染</span>
+    <span class="t-one">服务器生成 HTML 再发给浏览器</span>
+    <span class="t-tag">SSR</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">spa</span>
+    <span class="t-zh">单页应用</span>
+    <span class="t-one">一个 HTML 页内切换视图</span>
+    <span class="t-tag">SPA</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">cdn</span>
+    <span class="t-zh">CDN</span>
+    <span class="t-one">就近缓存静态资源加速访问</span>
+    <span class="t-tag">CDN</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">websocket</span>
+    <span class="t-zh">WebSocket</span>
+    <span class="t-one">浏览器与服务器双向实时通道</span>
+    <span class="t-tag">WebSocket</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">graphql</span>
+    <span class="t-zh">GraphQL</span>
+    <span class="t-one">客户端指定要哪些字段的查询语言</span>
+    <span class="t-tag">GraphQL</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">http</span>
+    <span class="t-zh">HTTP</span>
+    <span class="t-one">浏览器与服务器通信协议</span>
+    <span class="t-tag">HTTP</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">https</span>
+    <span class="t-zh">HTTPS</span>
+    <span class="t-one">加密的 HTTP</span>
+    <span class="t-tag">HTTPS</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">dns</span>
+    <span class="t-zh">DNS</span>
+    <span class="t-one">域名翻译成 IP 地址</span>
+    <span class="t-tag">DNS</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">tcp</span>
+    <span class="t-zh">TCP</span>
+    <span class="t-one">可靠有序的数据传输协议</span>
+    <span class="t-tag">TCP</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">udp</span>
+    <span class="t-zh">UDP</span>
+    <span class="t-one">快速但可能丢包传输</span>
+    <span class="t-tag">UDP</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">localhost</span>
+    <span class="t-zh">本地主机</span>
+    <span class="t-one">本机地址 127.0.0.1</span>
+    <span class="t-tag">Localhost</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">load-balancer</span>
+    <span class="t-zh">负载均衡</span>
+    <span class="t-one">把流量分到多台服务器</span>
+    <span class="t-tag">Load Balancer</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">reverse-proxy</span>
+    <span class="t-zh">反向代理</span>
+    <span class="t-one">挡在服务器前统一接流量</span>
+    <span class="t-tag">Reverse Proxy</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">cors</span>
+    <span class="t-zh">CORS</span>
+    <span class="t-one">浏览器跨域访问安全策略</span>
+    <span class="t-tag">CORS</span>
+  </div>
+  <div class="term-row">
+    <span class="t-id">jwt-auth</span>
+    <span class="t-zh">Bearer Token</span>
+    <span class="t-one">HTTP 头里带令牌的身份验证</span>
+    <span class="t-tag">Bearer Token</span>
+  </div>
+  
+</main>
+<footer>
+  <div class="container">
+    <p><a href="https://github.com/YqqLikeGit/ai-heihua-zh">GitHub</a> · 133 词条 · MIT License</p>
+    <p style="margin-top:4px">Made for devs who want to understand AI · 收藏一个仓库，查词不用到处 Google</p>
+  </div>
+</footer>
+<script>
+(function(){
+  const q = document.getElementById('search');
+  if (!q) return;
+  q.addEventListener('input', function(){
+    const v = this.value.toLowerCase().trim();
+    document.querySelectorAll('.term-row').forEach(function(r){
+      r.style.display = v ? (r.textContent.toLowerCase().includes(v) ? '' : 'none') : '';
+    });
+    document.querySelectorAll('.cat-card').forEach(function(c){
+      c.style.display = v ? 'none' : '';
+    });
+    document.querySelectorAll('.section-title').forEach(function(s){
+      s.style.display = v ? 'none' : '';
+    });
+    const visible = document.querySelectorAll('.term-row:not([style*="display: none"])').length;
+    const total = 133;
+    const el = document.getElementById('no-results');
+    if (el) el.style.display = (v && visible === 0) ? '' : 'none';
+    const hint = document.getElementById('results-hint');
+    if (hint) hint.textContent = v ? visible + ' / ' + total + ' 条匹配' : '';
+  });
+})();
+</script>
+</body>
+</html>

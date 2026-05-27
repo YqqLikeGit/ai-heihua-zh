@@ -32,6 +32,19 @@ bash scripts/install-cursor-rules.sh          # -> ~/.cursor/rules
 
 含：通用中文规范 · Python · TypeScript/React · Git Commit · 见 `cursor-rules/`
 
+---
+
+## Cursor MCP 一键配置（姊妹仓库 · 2026 热点）
+
+配不好 `mcp.json`？用这个：
+
+👉 **[cursor-mcp-starter-zh](https://github.com/YqqLikeGit/cursor-mcp-starter-zh)** — 模板 + `install.sh` + `doctor.sh`
+
+```bash
+git clone https://github.com/YqqLikeGit/cursor-mcp-starter-zh.git
+cd cursor-mcp-starter-zh && bash scripts/install.sh minimal
+```
+
 ## 终端查词
 
 ```bash

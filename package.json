@@ -5,7 +5,14 @@
   "bin": {
     "heihua": "./bin/heihua"
   },
-  "keywords": ["ai", "glossary", "chinese", "programming", "mcp", "cursor", "claude"],
+  "keywords": [
+    "ai", "glossary", "chinese", "programming", "mcp", "cursor", "claude",
+    "agent", "rag", "llm", "github", "open-source", "terminal", "cli",
+    "developer-tools", "education", "reference", "dictionary", "terminology",
+    "artificial-intelligence", "machine-learning", "coding", "vibe-coding",
+    "developer", "程序员", "术语", "词典", "黑话", "入门", "教程",
+    "ai-tools", "claude-code", "cursor-ai", "model-context-protocol"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
