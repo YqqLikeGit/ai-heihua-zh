@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -96,6 +97,8 @@ def main() -> None:
     write_glossary_pages()
     write_index_json()
     write_readme_table()
+    import subprocess
+    subprocess.run([sys.executable, str(Path(__file__).parent / "build-site.py")], check=True)
     print(f"Built {len(TERMS)} terms")
 
 

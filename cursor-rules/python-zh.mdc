@@ -1,0 +1,13 @@
+---
+description: Python 项目规范 — type hints、 pathlib、 清晰错误
+globs: **/*.py
+alwaysApply: false
+---
+
+# Python
+
+- Python 3.9+ 可用 pathlib、typing
+- 公共函数加 type hints
+- 异常要有可读的 raise/消息，避免裸 except
+- 脚本入口用 `if __name__ == "__main__"`
+- 依赖第三方库时在 README 或 requirements 注明

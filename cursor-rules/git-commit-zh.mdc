@@ -1,0 +1,12 @@
+---
+description: Git 提交信息 — 中文或英文完整句，说明 why
+globs: 
+alwaysApply: true
+---
+
+# Git Commit
+
+- 一行摘要 ≤72 字，说 **为什么** 不只说做了什么
+- 用动词开头：fix / add / update / refactor
+- 不要 commit 密钥、.env、credentials
+- 无关文件不要混进同一 commit

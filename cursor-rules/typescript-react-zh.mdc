@@ -1,0 +1,13 @@
+---
+description: TypeScript/React — 严格类型、函数组件、hooks
+globs: **/*.{ts,tsx}
+alwaysApply: false
+---
+
+# TypeScript / React
+
+- 优先 function component + hooks
+- 避免 any；必要时 unknown + 窄化
+- 组件 props 用 interface 定义
+- 副作用放 useEffect，依赖数组写全
+- 样式沿用项目现有方案（Tailwind/CSS Modules 等）

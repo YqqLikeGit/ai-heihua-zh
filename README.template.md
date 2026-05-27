@@ -17,9 +17,20 @@
 - [computerese-cross-references](https://github.com/EarsEyesMouth/computerese-cross-references) **1000+ Star** — 经典术语对照依然缺 **2026 AI 新词**
 - [one-small-step](https://github.com/karminski/one-small-step) **6900+ Star** — 证明「5 分钟搞懂一个概念」模式有效
 
-**本项目 = 经典 CS + GitHub 必备 + AI/Cursor 2026 热词，中英对照 + 人话比喻 + 终端 CLI 查词。**
+**本项目 = 经典 CS + GitHub 必备 + AI/Cursor 2026 热词 + 中文 Cursor Rules，中英对照 + 人话比喻 + 终端 CLI 查词。**
 
 ---
+
+## Cursor Rules 一键安装
+
+```bash
+git clone https://github.com/YqqLikeGit/ai-heihua-zh.git
+cd ai-heihua-zh
+bash scripts/install-cursor-rules.sh          # -> ~/.cursor/rules
+# 或项目级：bash scripts/install-cursor-rules.sh .cursor/rules
+```
+
+含：通用中文规范 · Python · TypeScript/React · Git Commit · 见 `cursor-rules/`
 
 ## 终端查词
 
