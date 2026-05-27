@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+export HEIHUA_ROOT="$ROOT"
+exec python3 - "$@" <<'PY'
+import json, os, sys
+from pathlib import Path
+
+root = Path(os.environ["HEIHUA_ROOT"])
+index = json.loads((root / "glossary/index.json").read_text("utf-8"))
+terms_list = index["terms"]
+by_id = {t["id"]: t for t in terms_list}
+aliases = {}
+for t in terms_list:
+    aliases[t["id"]] = t
+    aliases[t["id"].replace("-", "")] = t
+    aliases[t["zh"]] = t
+    for part in t["en"].lower().replace("/", " ").split():
+        if len(part) > 2:
+            aliases[part] = t
+
+args = sys.argv[1:]
+if not args or args[0] in ("-h", "--help"):
+    print("用法: heihua <词条>     例: heihua star | heihua mcp")
+    print("      heihua --list [github|ai|cursor|cs|web]")
+    raise SystemExit(0)
+
+if args[0] == "--list":
+    cat = args[1] if len(args) > 1 else None
+    for t in terms_list:
+        if cat and t["cat"] != cat:
+            continue
+        print(f"{t['id']:<22} {t['zh']:<14} {t['one'][:36]}")
+    raise SystemExit(0)
+
+key = args[0].lower().replace("_", "-")
+t = aliases.get(key) or aliases.get(key.replace("-", ""))
+if not t:
+    hits = [x for x in terms_list if key in x["id"] or key in x["zh"] or key in x["en"].lower()]
+    if len(hits) == 1:
+        t = hits[0]
+    elif hits:
+        print("多个匹配，请指定 id:")
+        for h in hits[:12]:
+            print(f"  heihua {h['id']}")
+        raise SystemExit(0)
+    else:
+        print(f"未找到「{args[0]}」→ 运行 heihua --list")
+        raise SystemExit(1)
+
+print(f"\n【{t['zh']}】  {t['en']}\n")
+print(f"一句话  {t['one']}\n")
+print(f"比喻    {t['analogy']}\n")
+print(f"分类    {t['cat']}")
+print(f"详解    glossary/{t['cat']}/{t['id']}.md\n")
+PY
