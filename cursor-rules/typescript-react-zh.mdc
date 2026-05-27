@@ -1,6 +1,6 @@
 ---
 description: TypeScript/React — 严格类型、函数组件、hooks
-globs: **/*.{ts,tsx}
+globs: "**/*.{ts,tsx}"
 alwaysApply: false
 ---
 
