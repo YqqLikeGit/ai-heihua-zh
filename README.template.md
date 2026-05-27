@@ -24,12 +24,14 @@
 ## 终端查词
 
 ```bash
+# 方式 1：克隆（推荐）
 git clone https://github.com/YqqLikeGit/ai-heihua-zh.git
 cd ai-heihua-zh
 ./bin/heihua star          # 查「Star 是什么」
 ./bin/heihua mcp           # 查 MCP
-./bin/heihua github        # 查 GitHub
-./bin/heihua --list ai     # 列出 AI 分类全部词条
+
+# 方式 2：npx 免安装（需 Node）
+npx --yes github:YqqLikeGit/ai-heihua-zh heihua mcp
 ```
 
 ---
